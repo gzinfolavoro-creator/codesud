@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeSud Studio — Web Agency Palermo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#060d1a;--ink2:#0b1625;--ink3:#0f1e32;
+  --gold:#f0b429;--gold2:#ffd166;--gold3:#c88a00;
+  --silver:#99aabb;--white:#f0f4f8;--text:#dde6f0;
+  --muted:#6e7f94;--card:#0d1c2e;--border:rgba(240,180,41,.18);
+  --green:#00e676;--red:#ff4757;--blue:#4fc3f7;
+  --accent:#ff6b35;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{cursor:none}
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s,opacity .2s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(240,180,41,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .1s ease}
+@media(pointer:coarse){#cursor,#cursor-ring{display:none}body{cursor:auto}}
+
+nav{background:rgba(6,13,26,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:baseline;gap:2px}
+.nav-logo .main{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);letter-spacing:.5px}
+.nav-logo .dot{color:var(--gold2);font-size:1.6rem}
+.nav-logo .studio{font-size:.62rem;color:var(--silver);letter-spacing:5px;text-transform:uppercase;margin-left:5px;align-self:center}
+nav ul{list-style:none;display:flex;gap:2.2rem}
+nav ul a{color:var(--silver);text-decoration:none;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:.2s;font-weight:500;position:relative}
+nav ul a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--gold);transition:width .3s}
+nav ul a:hover{color:var(--gold)}
+nav ul a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--accent));color:#000;padding:10px 22px;border-radius:3px;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:.2s;box-shadow:0 0 20px rgba(240,180,41,.3)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 4px 30px rgba(240,180,41,.5)}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-bg::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 50% at 20% 20%,rgba(240,180,41,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 40% at 80% 70%,rgba(255,107,53,.07) 0%,transparent 60%),
+  radial-gradient(ellipse 80% 60% at 50% 100%,rgba(79,195,247,.05) 0%,transparent 60%)}
+.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:250px;background:linear-gradient(to top,var(--ink),transparent)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:float 8s ease-in-out infinite}
+.orb1{width:500px;height:500px;background:rgba(240,180,41,.06);top:-100px;left:-100px;animation-delay:0s}
+.orb2{width:400px;height:400px;background:rgba(255,107,53,.05);bottom:-100px;right:-50px;animation-delay:-3s}
+.orb3{width:300px;height:300px;background:rgba(79,195,247,.04);top:50%;right:20%;animation-delay:-6s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(.97)}}
+.grid-lines{position:absolute;inset:0;opacity:.025;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(240,180,41,1) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(240,180,41,1) 80px)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);padding:8px 20px;border-radius:30px;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem;position:relative;z-index:1}
+.hero-eyebrow span{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px var(--green)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,9vw,6rem);color:var(--white);line-height:1.02;margin-bottom:1.5rem;position:relative;z-index:1}
+h1 em{background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+h1 .line2{display:block;color:var(--text);font-size:.7em;margin-top:.3rem;font-weight:400}
+.hero-sub{color:var(--muted);font-size:1.05rem;max-width:560px;line-height:1.8;margin:0 auto 3rem;font-weight:300;position:relative;z-index:1}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--accent));color:#000;padding:16px 36px;border-radius:3px;font-size:.85rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:.25s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(240,180,41,.35)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 8px 35px rgba(240,180,41,.5)}
+.btn-outline{background:transparent;color:var(--silver);padding:16px 36px;border-radius:3px;font-size:.85rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:.25s;border:1px solid rgba(184,196,212,.25)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);background:rgba(240,180,41,.06)}
+.hero-stats{display:flex;gap:3.5rem;justify-content:center;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);position:relative;z-index:1;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.5rem;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:.68rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:5px}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;z-index:1}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrolldown 1.8s infinite}
+@keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+section{padding:7rem 2rem}
+.section-inner{max-width:1220px;margin:0 auto}
+.section-label{font-size:.67rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';width:20px;height:1.5px;background:var(--gold)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white);line-height:1.1;margin-bottom:.9rem}
+.section-title em{background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+.section-desc{color:var(--muted);font-size:.95rem;line-height:1.8;max-width:580px;font-weight:300}
+
+.visual-banner{position:relative;overflow:hidden;height:260px;border-radius:8px;margin-top:4rem;border:1px solid var(--border)}
+.visual-banner img{width:100%;height:100%;object-fit:cover;opacity:.55;filter:saturate(.7)}
+.visual-banner-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,13,26,.85) 0%,rgba(6,13,26,.3) 100%);display:flex;align-items:center;padding:3rem}
+.visual-banner h3{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--white);max-width:420px;line-height:1.2}
+.visual-banner h3 em{color:var(--gold);font-style:italic}
+.visual-banner-badge{margin-top:.8rem;display:inline-flex;gap:.5rem;flex-wrap:wrap}
+.vbadge{background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.25);color:var(--gold);font-size:.65rem;padding:4px 12px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase}
+
+#servizi{background:var(--ink2)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;margin-top:3.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.service-card{background:var(--card);padding:2.4rem;transition:.35s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--accent));transition:width .4s ease}
+.service-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(240,180,41,.04),transparent 60%);opacity:0;transition:.4s}
+.service-card:hover::before{width:100%}
+.service-card:hover::after{opacity:1}
+.service-card:hover{background:rgba(14,28,48,.9);transform:translateY(-2px)}
+.service-icon{width:48px;height:48px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;transition:.3s;background:rgba(240,180,41,.04)}
+.service-card:hover .service-icon{border-color:var(--gold);background:rgba(240,180,41,.1);box-shadow:0 0 20px rgba(240,180,41,.15)}
+.service-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.service-img{width:100%;height:120px;object-fit:cover;border-radius:4px;margin-bottom:1.2rem;opacity:.7;transition:.3s}
+.service-card:hover .service-img{opacity:.9}
+.service-name{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);margin-bottom:.6rem}
+.service-desc{font-size:.88rem;color:var(--muted);line-height:1.75;font-weight:300}
+.service-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.3rem}
+.tag{font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);padding:4px 10px;border-radius:20px}
+
+/* PORTFOLIO — project cards with real links */
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1.8rem;margin-top:3.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:.35s;position:relative;display:block;text-decoration:none;color:inherit}
+.project-card:hover{border-color:rgba(240,180,41,.5);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.proj-img{height:240px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.proj-img img{width:100%;height:100%;object-fit:cover;transition:.6s;filter:saturate(.9)}
+.project-card:hover .proj-img img{transform:scale(1.06);filter:saturate(1.1)}
+.proj-overlay{position:absolute;inset:0;background:rgba(6,13,26,.7);display:flex;align-items:center;justify-content:center;gap:1rem;opacity:0;transition:.3s;backdrop-filter:blur(4px)}
+.project-card:hover .proj-overlay{opacity:1}
+.proj-cta{background:linear-gradient(135deg,var(--gold),var(--accent));color:#000;padding:12px 26px;border-radius:3px;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.proj-cta:hover{transform:scale(1.05)}
+.proj-body{padding:1.6rem}
+.proj-type{font-size:.63rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;font-weight:600}
+.proj-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--white);margin-bottom:.45rem}
+.proj-desc{font-size:.87rem;color:var(--muted);line-height:1.7;font-weight:300}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem}
+.stack-badge{font-size:.62rem;letter-spacing:1px;background:rgba(184,196,212,.06);border:1px solid rgba(184,196,212,.15);color:var(--silver);padding:4px 9px;border-radius:20px}
+.project-card.featured{border-color:rgba(240,180,41,.3)}
+.live-badge{position:absolute;top:16px;right:16px;background:var(--green);color:#000;font-size:.58rem;letter-spacing:2px;padding:5px 11px;border-radius:20px;font-weight:700;z-index:5;display:flex;align-items:center;gap:5px;box-shadow:0 0 15px rgba(0,230,118,.4)}
+.live-badge::before{content:'';width:6px;height:6px;background:#000;border-radius:50%;animation:pulse 1.5s infinite}
+.coming-badge{position:absolute;top:16px;right:16px;background:rgba(99,110,130,.3);border:1px solid rgba(99,110,130,.5);color:#aaa;font-size:.58rem;letter-spacing:2px;padding:5px 11px;border-radius:20px;font-weight:700;z-index:5}
+
+#processo{background:var(--ink2)}
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2.5rem;margin-top:4rem;position:relative}
+.process-steps::before{content:'';position:absolute;top:30px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.step{position:relative;padding-top:3.5rem}
+.step-num{position:absolute;top:0;left:0;width:56px;height:56px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--ink2);font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);transition:.3s}
+.step:hover .step-num{border-color:var(--gold);background:rgba(240,180,41,.08);box-shadow:0 0 20px rgba(240,180,41,.2)}
+.step-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);margin-bottom:.6rem}
+.step-desc{font-size:.84rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+.tech-strip{margin-top:3rem;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,black 15%,black 85%,transparent)}
+.tech-inner{display:flex;gap:1.5rem;animation:marquee 25s linear infinite;width:max-content}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tech-pill{background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.16);padding:10px 22px;border-radius:30px;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);white-space:nowrap;transition:.2s}
+.tech-pill:hover{border-color:var(--gold);color:var(--gold)}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:4rem}
+.about-img{border-radius:8px;overflow:hidden;position:relative;height:400px;border:1px solid var(--border)}
+.about-img img{width:100%;height:100%;object-fit:cover;opacity:.75}
+.about-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,180,41,.15),transparent)}
+.about-img-badge{position:absolute;bottom:1.5rem;left:1.5rem;background:rgba(6,13,26,.9);border:1px solid var(--border);border-radius:8px;padding:1rem 1.4rem;backdrop-filter:blur(10px)}
+.about-img-badge .num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold)}
+.about-img-badge .lbl{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.about-content{display:flex;flex-direction:column;gap:1.2rem}
+.about-feature{display:flex;gap:1rem;align-items:flex-start;padding:1.2rem;background:var(--card);border:1px solid var(--border);border-radius:8px;transition:.3s}
+.about-feature:hover{border-color:rgba(240,180,41,.3);background:rgba(14,28,48,.8)}
+.about-feature-icon{width:40px;height:40px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+.about-feature h4{font-size:.92rem;color:var(--white);margin-bottom:.3rem}
+.about-feature p{font-size:.83rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3.5rem;align-items:start;margin-top:4rem}
+.contact-form{display:flex;flex-direction:column;gap:1.3rem}
+.form-field{display:flex;flex-direction:column;gap:.45rem}
+.form-field label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:500}
+.form-field input,.form-field textarea,.form-field select{background:var(--ink2);border:1px solid rgba(184,196,212,.15);color:var(--text);padding:13px 16px;border-radius:6px;font-family:'DM Sans';font-size:.92rem;transition:.2s;outline:none}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:rgba(240,180,41,.5);background:rgba(240,180,41,.03);box-shadow:0 0 0 3px rgba(240,180,41,.06)}
+.form-field textarea{resize:vertical;min-height:130px}
+.form-field select{cursor:pointer}
+.contact-info{display:flex;flex-direction:column;gap:1.2rem}
+.ci-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;display:flex;gap:1rem;transition:.3s}
+.ci-block:hover{border-color:rgba(240,180,41,.35);background:rgba(14,28,48,.8)}
+.ci-icon{width:42px;height:42px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(240,180,41,.05)}
+.ci-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ci-label{font-size:.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.ci-val{color:var(--white);font-size:.92rem;line-height:1.5}
+.ci-val a{color:var(--white);text-decoration:none;transition:.2s}
+.ci-val a:hover{color:var(--gold)}
+.wa-full{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:16px;border-radius:8px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:.25s;margin-top:.8rem;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+.wa-full:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(37,211,102,.4)}
+.contact-img{border-radius:8px;overflow:hidden;height:200px;border:1px solid var(--border);position:relative}
+.contact-img img{width:100%;height:100%;object-fit:cover;opacity:.5}
+.contact-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,13,26,.6),transparent);display:flex;align-items:flex-end;padding:1.2rem}
+.contact-img p{font-size:.8rem;color:var(--gold);font-style:italic;font-family:'Playfair Display',serif}
+
+footer{background:var(--ink);border-top:1px solid var(--border);padding:3.5rem 2rem;text-align:center}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:.4rem}
+.footer-sub{font-size:.63rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:1.8rem}
+.footer-links{display:flex;gap:2rem;justify-content:center;margin-bottom:1.8rem}
+.footer-links a{color:var(--muted);font-size:.78rem;text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.footer-links a:hover{color:var(--gold)}
+footer p{color:var(--muted);font-size:.8rem}
+footer span{color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right.visible{opacity:1;transform:none}
+
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink3);border:1px solid var(--green);color:var(--white);padding:1rem 1.5rem;border-radius:8px;font-size:.88rem;z-index:2000;transform:translateY(100px);opacity:0;transition:.4s;max-width:300px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{color:var(--green);font-size:1.1rem;margin-right:.5rem}
+
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .about-img{height:280px}
+}
+@media(max-width:760px){
+  nav ul{display:none}
+  .hero{padding:5rem 1.2rem 3rem}
+  .hero-stats{gap:1.5rem}
+  section{padding:4.5rem 1.2rem}
+  .contact-grid{grid-template-columns:1fr}
+  .portfolio-grid{grid-template-columns:1fr}
+  .process-steps::before{display:none}
+  .services-grid{grid-template-columns:1fr}
+  .visual-banner h3{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div class="toast" id="toast"><span class="toast-icon">✓</span> <span id="toast-msg">Messaggio inviato!</span></div>
+
+<nav>
+  <div class="nav-logo">
+    <span class="main">CodeSud</span>
+    <span class="dot">.</span>
+    <span class="studio">Studio</span>
+  </div>
+  <ul>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#about">Chi siamo</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#contatti">Contatti</a></li>
+  </ul>
+  <a class="nav-cta" href="#contatti">Parlaci del tuo progetto</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-lines"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="hero-eyebrow"><span></span> Web Agency · Palermo, Sicilia</div>
+  <h1>Trasformiamo <em>idee</em><span class="line2">in esperienze digitali.</span></h1>
+  <p class="hero-sub">Realizziamo siti web, portali di notizie, e-commerce e applicazioni su misura. Ogni progetto è unico — costruito con codice pulito, design che colpisce e attenzione ai dettagli.</p>
+  <div class="hero-actions">
+    <a href="#portfolio" class="btn-gold">Vedi i nostri lavori</a>
+    <a href="#contatti" class="btn-outline">Chiedi un preventivo</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Made in Sicily</div></div>
+    <div class="stat"><div class="stat-n">Custom</div><div class="stat-l">Codice su misura</div></div>
+    <div class="stat"><div class="stat-n">AI</div><div class="stat-l">Integrazione avanzata</div></div>
+    <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Supporto post-lancio</div></div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<section id="servizi">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Cosa facciamo</div>
+      <h2 class="section-title">Soluzioni <em>digitali</em> su misura</h2>
+      <p class="section-desc">Dalla strategia al lancio, copriamo ogni aspetto del tuo progetto web con tecnologie moderne e design distintivo.</p>
+    </div>
+    <div class="visual-banner reveal">
+      <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=80&auto=format" alt="Web design workspace" />
+      <div class="visual-banner-overlay">
+        <div>
+          <h3>Design che <em>converte</em>,<br>codice che <em>dura</em>.</h3>
+          <div class="visual-banner-badge">
+            <span class="vbadge">Design Custom</span>
+            <span class="vbadge">SEO First</span>
+            <span class="vbadge">Mobile First</span>
+            <span class="vbadge">Performance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="services-grid reveal" style="margin-top:2rem">
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=75&auto=format" alt="Siti web professionali">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="service-name">Siti Web Professionali</div>
+        <div class="service-desc">Landing page, siti vetrina e portali aziendali con design esclusivo, ottimizzati per conversioni e motori di ricerca.</div>
+        <div class="service-tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">SEO</span><span class="tag">Responsive</span></div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=75&auto=format" alt="Portali news">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="service-name">Portali News & Media</div>
+        <div class="service-desc">Sistemi editoriali completi per testate giornalistiche online, con CMS personalizzato, aggiornamento rapido e monetizzazione.</div>
+        <div class="service-tags"><span class="tag">CMS Custom</span><span class="tag">News Portal</span><span class="tag">Breaking News</span></div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=75&auto=format" alt="E-commerce">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+        <div class="service-name">E-Commerce</div>
+        <div class="service-desc">Negozi online performanti, gestione catalogo, pagamenti sicuri e dashboard amministrativa intuitiva per vendere ovunque.</div>
+        <div class="service-tags"><span class="tag">WooCommerce</span><span class="tag">Stripe</span><span class="tag">Dashboard</span></div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=75&auto=format" alt="Gestionale">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="service-name">Pannelli Admin & Gestionale</div>
+        <div class="service-desc">Dashboard gestionali su misura per concessionarie, studi professionali, ristoranti e qualsiasi attività che necessita di controllo totale.</div>
+        <div class="service-tags"><span class="tag">Admin Panel</span><span class="tag">CRM</span><span class="tag">Automation</span></div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=75&auto=format" alt="AI integrazione">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="service-name">AI & Automazione</div>
+        <div class="service-desc">Integrazione di intelligenza artificiale nei tuoi processi: chatbot, generazione contenuti, analisi dati e automazione workflow.</div>
+        <div class="service-tags"><span class="tag">ChatGPT API</span><span class="tag">Claude AI</span><span class="tag">Automazione</span></div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=75&auto=format" alt="WhatsApp Marketing">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.18 9.82a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.11 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.09a16 16 0 0 0 6 6l.46-.46a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg></div>
+        <div class="service-name">WhatsApp Marketing</div>
+        <div class="service-desc">Integrazione WhatsApp Business, schede veicolo in PDF, messaggi automatici e sistemi di prenotazione via chat.</div>
+        <div class="service-tags"><span class="tag">WhatsApp API</span><span class="tag">PDF Auto</span><span class="tag">Lead Gen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--ink3);padding:2rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="tech-strip">
+    <div class="tech-inner">
+      <span class="tech-pill">HTML5</span><span class="tech-pill">CSS3</span><span class="tech-pill">JavaScript</span><span class="tech-pill">PHP</span><span class="tech-pill">WordPress</span><span class="tech-pill">MySQL</span><span class="tech-pill">React</span><span class="tech-pill">Node.js</span><span class="tech-pill">WhatsApp API</span><span class="tech-pill">Claude AI</span><span class="tech-pill">OpenAI</span><span class="tech-pill">jsPDF</span><span class="tech-pill">SEO On-Page</span><span class="tech-pill">Google Analytics</span>
+      <span class="tech-pill">HTML5</span><span class="tech-pill">CSS3</span><span class="tech-pill">JavaScript</span><span class="tech-pill">PHP</span><span class="tech-pill">WordPress</span><span class="tech-pill">MySQL</span><span class="tech-pill">React</span><span class="tech-pill">Node.js</span><span class="tech-pill">WhatsApp API</span><span class="tech-pill">Claude AI</span><span class="tech-pill">OpenAI</span><span class="tech-pill">jsPDF</span><span class="tech-pill">SEO On-Page</span><span class="tech-pill">Google Analytics</span>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO — link a pagine dedicate -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">I nostri lavori</div>
+      <h2 class="section-title">Portfolio <em>Selezionato</em></h2>
+      <p class="section-desc">Ogni progetto è una storia diversa. Ecco alcune delle esperienze digitali che abbiamo costruito.</p>
+    </div>
+    <div class="portfolio-grid reveal">
+
+      <!-- PalermoOggi — link a pagina dedicata -->
+      <a href="projects/palermooggi.html" class="project-card featured">
+        <div class="live-badge">LIVE</div>
+        <div class="proj-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=700&q=80&auto=format" alt="PalermoOggi portale news">
+          <div class="proj-overlay">
+            <span class="proj-cta">Scopri il progetto →</span>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">Portale di Notizie · Live</div>
+          <div class="proj-name">PalermoOggi.com</div>
+          <div class="proj-desc">Testata giornalistica online dedicata a Palermo e alla Sicilia. Notizie aggiornate in tempo reale, sezioni tematiche, breaking news e sistema editoriale custom ad alte prestazioni.</div>
+          <div class="proj-stack">
+            <span class="stack-badge">CMS Custom</span>
+            <span class="stack-badge">News Portal</span>
+            <span class="stack-badge">SEO</span>
+            <span class="stack-badge">Mobile First</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Zito Cars — link a pagina dedicata -->
+      <a href="projects/zitocars.html" class="project-card featured">
+        <div class="coming-badge">IN PUBBLICAZIONE</div>
+        <div class="proj-img">
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=700&q=80&auto=format" alt="Zito Cars concessionaria">
+          <div class="proj-overlay">
+            <span class="proj-cta">Scopri il progetto →</span>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">Concessionaria Auto · In Pubblicazione</div>
+          <div class="proj-name">Zito Cars Selection</div>
+          <div class="proj-desc">Piattaforma premium per concessionaria auto con galleria veicoli, pannello admin completo, generazione PDF schede auto e integrazione diretta WhatsApp. Gestione stock in tempo reale.</div>
+          <div class="proj-stack">
+            <span class="stack-badge">Admin Panel</span>
+            <span class="stack-badge">jsPDF</span>
+            <span class="stack-badge">WhatsApp API</span>
+            <span class="stack-badge">Gallery</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Slot futuro -->
+      <div class="project-card" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:360px;text-align:center;gap:1.2rem;padding:2.5rem">
+        <div style="width:60px;height:60px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(240,180,41,.04)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div style="font-family:'Playfair Display',serif;color:var(--white);font-size:1.2rem">Il tuo progetto</div>
+        <div style="font-size:.85rem;color:var(--muted);max-width:240px;line-height:1.7;font-weight:300">Il prossimo lavoro potrebbe essere il tuo. Contattaci per discutere la tua idea.</div>
+        <a href="#contatti" class="btn-gold" style="font-size:.78rem;padding:12px 26px">Iniziamo →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background:var(--ink2)">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Chi siamo</div>
+      <h2 class="section-title">Artigiani <em>digitali</em><br>dal cuore di Palermo</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-img reveal-left">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&q=80&auto=format" alt="Team CodeSud">
+        <div class="about-img-overlay"></div>
+        <div class="about-img-badge">
+          <div class="num">100%</div>
+          <div class="lbl">Made in Sicily</div>
+        </div>
+      </div>
+      <div class="about-content reveal-right">
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.9;font-weight:300;margin-bottom:.5rem">Siamo un team di sviluppatori e designer palermitani appassionati di web. Non facciamo template: ogni progetto parte da zero, costruito attorno alle tue esigenze specifiche.</p>
+        <div class="about-feature">
+          <div class="about-feature-icon">🎯</div>
+          <div><h4>Obiettivi chiari</h4><p>Ogni scelta tecnica serve un obiettivo di business. Non sviluppiamo per il gusto di farlo.</p></div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">⚡</div>
+          <div><h4>Velocità di consegna</h4><p>Progetti consegnati nei tempi concordati. Nessuna sorpresa, nessun ritardo senza preavviso.</p></div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🤝</div>
+          <div><h4>Supporto continuo</h4><p>Restiamo al tuo fianco dopo il lancio. Aggiornamenti, modifiche, nuove funzionalità: siamo qui.</p></div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🔒</div>
+          <div><h4>Codice di tua proprietà</h4><p>Tutto il codice scritto è tuo. Nessun lock-in, nessun canone obbligatorio per "sbloccare" le funzioni.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="processo">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Come lavoriamo</div>
+      <h2 class="section-title">Il nostro <em>processo</em></h2>
+      <p class="section-desc">Un metodo collaudato per portare il tuo progetto dalla prima idea al lancio, senza sorprese.</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="step"><div class="step-num">01</div><div class="step-title">Ascolto & Analisi</div><div class="step-desc">Capire il tuo business, i tuoi clienti e i tuoi obiettivi. Nessun template preconfezionato — ogni progetto parte da zero.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-title">Progettazione</div><div class="step-desc">Design personalizzato con attenzione all'esperienza utente. Ti mostriamo mockup prima di scrivere una riga di codice.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-title">Sviluppo</div><div class="step-desc">Codice pulito, veloce e sicuro. Aggiornamenti costanti durante lo sviluppo così sai sempre a che punto siamo.</div></div>
+      <div class="step"><div class="step-num">04</div><div class="step-title">Lancio & Supporto</div><div class="step-desc">Deployment, test e messa online. Rimaniamo al tuo fianco per aggiornamenti, modifiche e crescita continua.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contatti" style="background:var(--ink2)">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Lavoriamo insieme</div>
+      <h2 class="section-title">Parlaci del tuo <em>progetto</em></h2>
+      <p class="section-desc">Hai un'idea? Un sito da rinnovare? Un gestionale da costruire? Scrivici, è gratis e senza impegno.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.3rem">
+          <div class="form-field"><label>Nome *</label><input type="text" id="f-nome" placeholder="Il tuo nome" required></div>
+          <div class="form-field"><label>Cognome</label><input type="text" id="f-cognome" placeholder="Cognome"></div>
+        </div>
+        <div class="form-field"><label>Email *</label><input type="email" id="f-email" placeholder="email@esempio.com" required></div>
+        <div class="form-field"><label>Telefono</label><input type="tel" id="f-tel" placeholder="+39 000 000 0000"></div>
+        <div class="form-field">
+          <label>Tipo di progetto</label>
+          <select id="f-tipo">
+            <option>Sito web / Landing page</option>
+            <option>Portale news / Blog</option>
+            <option>E-commerce</option>
+            <option>Pannello admin / Gestionale</option>
+            <option>Integrazione AI</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div class="form-field"><label>Raccontaci la tua idea</label><textarea id="f-msg" placeholder="Descrivi brevemente cosa vorresti realizzare..."></textarea></div>
+        <button type="submit" class="btn-gold" id="form-submit">Invia Richiesta →</button>
+      </form>
+      <div class="contact-info">
+        <div class="contact-img">
+          <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?w=600&q=75&auto=format" alt="Palermo Sicilia">
+          <div class="contact-img-overlay"><p>Palermo, cuore del Mediterraneo</p></div>
+        </div>
+        <div class="ci-block">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.18 9.82a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.11 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.09a16 16 0 0 0 6 6l.46-.46a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg></div>
+          <div><div class="ci-label">Telefono</div><div class="ci-val"><a href="tel:+39XXXXXXXXX">+39 — — —</a></div></div>
+        </div>
+        <div class="ci-block">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:info@codesud.it">info@codesud.it</a></div></div>
+        </div>
+        <div class="ci-block">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="ci-label">Sede</div><div class="ci-val">Palermo, Sicilia<br><span style="color:var(--muted);font-size:.82rem">Lavoriamo da remoto in tutta Italia</span></div></div>
+        </div>
+        <a class="wa-full" href="https://wa.me/39XXXXXXXXX?text=Ciao!%20Vorrei%20parlare%20di%20un%20progetto%20web." target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Scrivici su WhatsApp
+        </a>
+        <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:.3rem">Risposta entro poche ore, anche la domenica 🌞</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">CodeSud<span style="color:var(--gold2)">.</span>Studio</div>
+  <div class="footer-sub">Web Agency · Palermo, Sicilia</div>
+  <div class="footer-links">
+    <a href="#servizi">Servizi</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#about">Chi siamo</a>
+    <a href="#contatti">Contatti</a>
+    <a href="admin.html">Area Admin</a>
+  </div>
+  <p>© 2025 <span>CodeSud Studio</span> — Tutti i diritti riservati · P.IVA in fase di registrazione</p>
+  <p style="margin-top:.4rem;font-size:.72rem;color:var(--muted)">Siti web · E-commerce · Portali news · Gestionali · AI Integration</p>
+</footer>
+
+<script>
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let rx=0,ry=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+(function animRing(){rx+=(cx-rx)*.11;ry+=(cy-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';ring.style.borderColor='rgba(240,180,41,.7)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(240,180,41,.5)'});
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+function handleForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('form-submit');
+  btn.textContent='Invio in corso...'; btn.disabled=true;
+  const richiesta={
+    id:Date.now(),
+    data:new Date().toLocaleString('it-IT'),
+    nome:document.getElementById('f-nome').value,
+    cognome:document.getElementById('f-cognome').value,
+    email:document.getElementById('f-email').value,
+    telefono:document.getElementById('f-tel').value,
+    tipo:document.getElementById('f-tipo').value,
+    messaggio:document.getElementById('f-msg').value,
+    letto:false
+  };
+  const esistenti=JSON.parse(localStorage.getItem('codesud_richieste')||'[]');
+  esistenti.unshift(richiesta);
+  localStorage.setItem('codesud_richieste',JSON.stringify(esistenti));
+  setTimeout(()=>{
+    btn.textContent='✓ Inviato!';
+    showToast('Grazie! Ti risponderemo entro poche ore.');
+    setTimeout(()=>{btn.textContent='Invia Richiesta →';btn.disabled=false;e.target.reset();},3500);
+  },1000);
+}
+</script>
+</body>
+</html>

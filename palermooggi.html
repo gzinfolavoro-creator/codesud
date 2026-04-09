@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PalermoOggi.com — CodeSud Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#060d1a;--ink2:#0b1625;--ink3:#0f1e32;
+  --gold:#f0b429;--gold2:#ffd166;--gold3:#c88a00;
+  --silver:#99aabb;--white:#f0f4f8;--text:#dde6f0;
+  --muted:#6e7f94;--card:#0d1c2e;--border:rgba(240,180,41,.18);
+  --green:#00e676;--red:#ff4757;--blue:#4fc3f7;--accent:#ff6b35;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{cursor:none}
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(240,180,41,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .1s ease}
+@media(pointer:coarse){#cursor,#cursor-ring{display:none}body{cursor:auto}}
+
+nav{background:rgba(6,13,26,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:70px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:baseline;gap:2px;text-decoration:none}
+.nav-logo .main{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);letter-spacing:.5px}
+.nav-logo .dot{color:var(--gold2);font-size:1.6rem}
+.nav-logo .studio{font-size:.62rem;color:var(--silver);letter-spacing:5px;text-transform:uppercase;margin-left:5px;align-self:center}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--silver);text-decoration:none;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:.2s;font-weight:500}
+.nav-back:hover{color:var(--gold)}
+.nav-back svg{transition:.2s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+/* HERO */
+.proj-hero{min-height:70vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;padding:0}
+.proj-hero-img{position:absolute;inset:0}
+.proj-hero-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.6) brightness(.5)}
+.proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--ink) 30%,rgba(6,13,26,.4) 100%)}
+.proj-hero-content{position:relative;z-index:1;padding:4rem 2.5rem 4rem;max-width:1220px;margin:0 auto;width:100%}
+.proj-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);padding:7px 18px;border-radius:30px;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px var(--green)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,5rem);color:var(--white);line-height:1.05;margin-bottom:1.2rem}
+h1 em{background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+.proj-meta-row{display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
+.proj-meta-item{display:flex;flex-direction:column;gap:4px}
+.proj-meta-label{font-size:.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.proj-meta-val{font-size:.92rem;color:var(--text)}
+
+/* BODY */
+.proj-body{max-width:1220px;margin:0 auto;padding:5rem 2.5rem}
+.proj-grid{display:grid;grid-template-columns:2fr 1fr;gap:5rem;align-items:start}
+.proj-desc h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--white);margin-bottom:1rem}
+.proj-desc p{color:var(--muted);font-size:.95rem;line-height:1.9;font-weight:300;margin-bottom:1.5rem}
+.proj-desc p:last-child{margin-bottom:0}
+
+.proj-sidebar{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:100px}
+.sidebar-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem}
+.sidebar-card h3{font-size:.67rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px}
+.sidebar-card h3::before{content:'';width:14px;height:1.5px;background:var(--gold)}
+.tech-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.tech-tag{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);padding:5px 12px;border-radius:20px}
+.stat-list{display:flex;flex-direction:column;gap:.8rem}
+.stat-item{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(184,196,212,.07)}
+.stat-item:last-child{border-bottom:none}
+.stat-key{font-size:.83rem;color:var(--muted)}
+.stat-val{font-size:.88rem;color:var(--white);font-weight:500}
+
+.visit-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--accent));color:#000;padding:15px;border-radius:8px;font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:.25s;box-shadow:0 4px 20px rgba(240,180,41,.3)}
+.visit-btn:hover{transform:translateY(-3px);box-shadow:0 8px 35px rgba(240,180,41,.5)}
+.visit-btn svg{width:16px;height:16px;fill:none;stroke:#000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* SCREENSHOTS */
+.screenshots{margin-top:4rem}
+.screenshots h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:1.5rem;display:flex;align-items:center;gap:12px}
+.screenshots h2::after{content:'';flex:1;height:1px;background:var(--border)}
+.screens-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.screen-item{border-radius:10px;overflow:hidden;border:1px solid var(--border);transition:.35s}
+.screen-item:hover{border-color:rgba(240,180,41,.4);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.screen-item img{width:100%;height:200px;object-fit:cover;display:block;filter:saturate(.8);transition:.4s}
+.screen-item:hover img{filter:saturate(1)}
+.screen-caption{padding:.9rem 1.2rem;background:var(--card);font-size:.8rem;color:var(--muted)}
+
+/* FEATURES */
+.features{margin-top:4rem}
+.features h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:1.5rem;display:flex;align-items:center;gap:12px}
+.features h2::after{content:'';flex:1;height:1px;background:var(--border)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.feature-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:.3s}
+.feature-item:hover{border-color:rgba(240,180,41,.3);background:rgba(14,28,48,.9)}
+.feature-icon{font-size:1.4rem;margin-bottom:.8rem}
+.feature-title{font-size:.92rem;color:var(--white);font-weight:500;margin-bottom:.4rem}
+.feature-desc{font-size:.82rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* NEXT PROJECTS */
+.next-projects{background:var(--ink2);border-top:1px solid var(--border);padding:4rem 2.5rem}
+.next-inner{max-width:1220px;margin:0 auto}
+.next-label{font-size:.67rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.next-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.next-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;text-decoration:none;display:block;transition:.35s}
+.next-card:hover{border-color:rgba(240,180,41,.4);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.next-card-img{height:140px;overflow:hidden}
+.next-card-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7);transition:.4s}
+.next-card:hover .next-card-img img{filter:saturate(1)}
+.next-card-body{padding:1.1rem 1.3rem}
+.next-card-type{font-size:.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.next-card-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .proj-grid{grid-template-columns:1fr;gap:3rem}
+  .proj-sidebar{position:static}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .screens-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .proj-hero-content{padding:3rem 1.2rem}
+  .proj-body{padding:3rem 1.2rem}
+  nav{padding:0 1.2rem}
+  .features-grid{grid-template-columns:1fr}
+  .next-projects{padding:3rem 1.2rem}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <span class="main">CodeSud</span>
+    <span class="dot">.</span>
+    <span class="studio">Studio</span>
+  </a>
+  <a class="nav-back" href="../index.html#portfolio">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Portfolio
+  </a>
+</nav>
+
+<div class="proj-hero">
+  <div class="proj-hero-img">
+    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=85&auto=format" alt="PalermoOggi portale news">
+  </div>
+  <div class="proj-hero-overlay"></div>
+  <div class="proj-hero-content">
+    <div class="proj-eyebrow"><span class="live-dot"></span> Portale di Notizie · Live</div>
+    <h1>PalermoOggi<em>.com</em></h1>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Categoria</span>
+        <span class="proj-meta-val">Portale News & Media</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Stato</span>
+        <span class="proj-meta-val" style="color:var(--green)">● Online</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">URL</span>
+        <span class="proj-meta-val">www.palermooggi.com</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Anno</span>
+        <span class="proj-meta-val">2025</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-body">
+  <div class="proj-grid">
+    <div class="proj-desc reveal">
+      <h2>Testata giornalistica online per Palermo e la Sicilia</h2>
+      <p>PalermoOggi.com è un portale di notizie dedicato a Palermo e alla Sicilia, costruito per gestire un alto volume di contenuti in tempo reale con prestazioni elevate e un'esperienza di lettura ottimale su ogni dispositivo.</p>
+      <p>Il progetto nasce dall'esigenza di avere un sistema editoriale completamente personalizzato: nessun template preconfezionato, nessun plugin di terze parti che rallenta il caricamento. Ogni componente — dalla homepage alle schede articolo — è stato progettato e sviluppato da zero attorno alle esigenze specifiche della redazione.</p>
+      <p>Il CMS custom permette alla redazione di pubblicare articoli, gestire categorie, inserire breaking news e monitorare le performance in tempo reale, tutto da un pannello intuitivo accessibile da qualsiasi dispositivo.</p>
+
+      <div class="features reveal">
+        <h2>Funzionalità principali</h2>
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Breaking News in tempo reale</div>
+            <div class="feature-desc">Sistema di ticker e notifiche per notizie urgenti, con aggiornamento istantaneo senza ricaricare la pagina.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div class="feature-title">Mobile First</div>
+            <div class="feature-desc">Layout completamente responsive ottimizzato per la lettura su smartphone, che rappresenta l'80% del traffico.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔍</div>
+            <div class="feature-title">SEO Avanzato</div>
+            <div class="feature-desc">Structured data, sitemap automatica, meta tag dinamici e AMP per massima visibilità su Google News.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🗂️</div>
+            <div class="feature-title">CMS Custom</div>
+            <div class="feature-desc">Pannello redazionale su misura con gestione articoli, categorie, autori, tag e pianificazione pubblicazioni.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💰</div>
+            <div class="feature-title">Monetizzazione</div>
+            <div class="feature-desc">Integrazione spazi pubblicitari, Google AdSense e banner custom con gestione autonoma dalla redazione.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">Analytics integrata</div>
+            <div class="feature-desc">Dashboard con statistiche articoli più letti, andamento traffico e comportamento utenti in tempo reale.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screenshots reveal">
+        <h2>Screenshot</h2>
+        <div class="screens-grid">
+          <div class="screen-item">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80&auto=format" alt="Homepage PalermoOggi">
+            <div class="screen-caption">Homepage — feed notizie principale</div>
+          </div>
+          <div class="screen-item">
+            <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&q=80&auto=format" alt="Articolo PalermoOggi">
+            <div class="screen-caption">Pagina articolo — layout ottimizzato per lettura</div>
+          </div>
+          <div class="screen-item">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format" alt="CMS PalermoOggi">
+            <div class="screen-caption">Pannello CMS — gestione redazionale</div>
+          </div>
+          <div class="screen-item">
+            <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80&auto=format" alt="Mobile PalermoOggi">
+            <div class="screen-caption">Versione mobile — ottimizzata per smartphone</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-sidebar reveal">
+      <div class="sidebar-card">
+        <h3>Tecnologie</h3>
+        <div class="tech-list">
+          <span class="tech-tag">CMS Custom</span>
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">SEO</span>
+          <span class="tech-tag">Mobile First</span>
+          <span class="tech-tag">Google News</span>
+          <span class="tech-tag">AdSense</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Dettagli progetto</h3>
+        <div class="stat-list">
+          <div class="stat-item">
+            <span class="stat-key">Tipo</span>
+            <span class="stat-val">Portale News</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-key">Stato</span>
+            <span class="stat-val" style="color:var(--green)">Online</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-key">Anno</span>
+            <span class="stat-val">2025</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-key">CMS</span>
+            <span class="stat-val">Custom</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-key">Dispositivi</span>
+            <span class="stat-val">Mobile & Desktop</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://www.palermooggi.com" target="_blank" class="visit-btn">
+        Visita il sito
+        <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+      <a href="../index.html#contatti" class="visit-btn" style="background:transparent;color:var(--gold);border:1px solid rgba(240,180,41,.35);box-shadow:none;margin-top:.2rem">
+        Progetto simile? Scrivici
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="next-projects">
+  <div class="next-inner">
+    <div class="next-label">Altri progetti</div>
+    <div class="next-grid">
+      <a href="zitocars.html" class="next-card">
+        <div class="next-card-img">
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=500&q=75&auto=format" alt="Zito Cars">
+        </div>
+        <div class="next-card-body">
+          <div class="next-card-type">Concessionaria Auto</div>
+          <div class="next-card-name">Zito Cars Selection</div>
+        </div>
+      </a>
+      <a href="../index.html#contatti" class="next-card" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;text-align:center;padding:2rem;gap:.8rem">
+        <div style="font-size:1.5rem">+</div>
+        <div style="font-family:'Playfair Display',serif;color:var(--white);font-size:1rem">Il tuo progetto</div>
+        <div style="font-size:.82rem;color:var(--muted)">Contattaci per iniziare</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let rx=0,ry=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+(function animRing(){rx+=(cx-rx)*.11;ry+=(cy-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px'});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
